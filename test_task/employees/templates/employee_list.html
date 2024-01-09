@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main-block">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Full Name</th>
+          <th>Position</th>
+          <th>Email</th>
+          <th>Hire Date</th>
+          <th>Head</th>
+          <th>UUID</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in employees_data %}
+          <tr>
+            <td>{{ employee.id }}</td>
+            <td>{{ employee.full_name }}</td>
+            <td>{{ employee.position }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.hire_date }}</td>
+            <td>{{ employee.head_name }}</td>
+            <td>{{ employee.uuid }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endblock %}
+</div>
