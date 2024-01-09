@@ -1,0 +1,26 @@
+<!-- employees/templates/employees/employee_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main-block" style="margin: 100px">
+    <h2>Employee Hierarchy</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Position</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for employee in employees %}
+          <tr>
+            <td>{{ employee.full_name }}</td>
+            <td>{{ employee.position }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.hire_date }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endblock %}
+</div>
