@@ -92,6 +92,7 @@ function loadEmployeesByPosition(event, value, page) {
                     data.employees_data.forEach(function (employee) {
                         var row = document.createElement('tr');
                         row.style.verticalAlign = 'center';
+                        row.style.cursor = 'pointer';
                         row.addEventListener('click', function() {
                             showEmployee(employee);
                         });
@@ -134,6 +135,8 @@ function loadEmployeesByPosition(event, value, page) {
 }
 
 function showEmployee(employee) {
+    currentPage = 0;
+    document.getElementById('searchInput').value = '';
     var contentDiv = document.getElementById('mainTable');
     while (contentDiv.firstChild) {
         contentDiv.removeChild(contentDiv.firstChild);
@@ -153,24 +156,35 @@ function showEmployee(employee) {
 
         <div class="fieldInfo" style="width: 30%; text-align: left;">
             <div style="margin-top: 10px;">
-                <span style="color: rgba(79, 150, 250, 0.5);">Name:</span>
-                <span style="margin-left: 10px;">${employee.full_name}</span>
+                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Name:</span>
+                <span style="font-size: large; margin-left: 10px;">${employee.full_name}</span>
             </div>
             <div style="">
-                <span style="color: rgba(79, 150, 250, 0.5);">Position:</span>
-                <span style="margin-left: 10px;">${employee.position}</span>
+                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Position:</span>
+                <span id= "position" 
+                style="
+                    font-size: large;
+                    margin-left: 10px;
+                    cursor: pointer;
+                    transition-duration: 0.3s;" 
+                    onmouseover="this.style.color='rgba(255, 255, 255, 1)';
+                    this.style.textShadow='0 0 5px rgba(115, 150, 235, 1)';" 
+                    onmouseout="this.style.color=''; this.style.textShadow=''; this.style.transitionDuration='0.3s';">
+                    ${employee.position}
+                    </span>
             </div>
             <div style="">
-                <span style="color: rgba(79, 150, 250, 0.5);">Email:</span>
-                <span style="margin-left: 10px;">${employee.email}</span>
+                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Email:</span>
+                <span style="font-size: large; margin-left: 10px;">${employee.email}</span>
             </div>
             <div style="">
-                <span style="color: rgba(79, 150, 250, 0.5);">Hire Date:</span>
-                <span style="margin-left: 10px;">${employee.hire_date}</span>
+                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Hire Date:</span>
+                <span style="font-size: large; margin-left: 10px;">${employee.hire_date}</span>
             </div>
             <div style="">
-                <span style="color: rgba(79, 150, 250, 0.5);">Head:</span>
+                <span style="color: rgba(79, 150, 250, 0.5); font-size: large;">Head:</span>
                 <span id="head" style="
+                    font-size: large;
                     margin-left: 10px;
                     cursor: pointer;
                     transition-duration: 0.3s;" 
@@ -197,9 +211,13 @@ function showEmployee(employee) {
                 showEmployee(employee);
             })
         })
-
-
-
+    });
+    document.getElementById("position").addEventListener('click', function() {
+        fetch(`/api/employee_info/${employee.uuid}/0/`).then(
+            response => response.json()
+        ).then(data => {
+                loadEmployeesByPosition(null, employee.position, 0);
+        })
     });
     fetch(`/api/subordinates/${employee.uuid}/`)
             .then(response => response.json())
