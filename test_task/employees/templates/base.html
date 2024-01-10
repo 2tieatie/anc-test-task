@@ -11,27 +11,40 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/javascript.js' %}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const textInput = document.getElementById('searchInput');
-            if (textInput) {
-                textInput.addEventListener('input', loadEmployeesByPosition);
+    document.addEventListener('DOMContentLoaded', function () {
+    const textInput = document.getElementById('searchInput');
+    let timeoutId;
+    loadEmployeesByPosition(null, 'all', 0)
+    function handleInput(event) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(function () {
+            if (event.target.value.trim().length > 0) {
+                loadEmployeesByPosition(event, null, 0);
+            } else {
+                    }
+                }, 500);
             }
 
-            loadEmployeesByPosition('all');
-        });
+        if (textInput) {
+            textInput.addEventListener('input', handleInput);
+        }
+    });
     </script>
     <title>{% block title %}Employee Hierarchy{% endblock %}</title>
 </head>
 <body>
 
+
     <div id="content" class="container">
+        <div class="home">
+            <a href="/" class="home">Home</a>
+        </div>
         <div class="search-container">
             <input type="text" class="form-control" id="searchInput" placeholder="Search...">
-<!--            <button class="btn btn-dark btn-search" type="button" onclick="searchEmployees()" >Search</button>-->
         </div>
-        <div id="mainTable">
-            <!-- {% block content %}{% endblock %} -->
-        </div>
+        <div id="resultsInfo"></div>
+        <div id="mainTable"></div>
+        <div id="pagination"></div>
     </div>
 </body>
 </html>

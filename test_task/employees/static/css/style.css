@@ -3,37 +3,28 @@ body {
 }
 
 #content {
-    margin-top: 15%;
+    margin-top: 15vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    /*height: 100vh;*/
 }
 
 .search-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     width: 100%;
 }
 
 #searchInput {
     border-radius: 12px;
-    width: 100%;
+    width: calc(100% - 3px);
     min-height: 30px;
     padding-left: 15px;
     margin-right: 3px;
 }
-
-/*.btn-search {*/
-/*    border-top-right-radius: 10px;*/
-/*    border-bottom-right-radius: 10px;*/
-/*    margin-bottom: 9px;*/
-/*    background-color: #3c763d;*/
-/*}*/
-
 
 
 #mainTable {
@@ -41,5 +32,51 @@ body {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-    margin-bottom: 15%;
+    white-space: nowrap;
 }
+
+
+#resultsInfo {
+    margin-bottom: 5px;
+}
+
+
+.pagButton {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.8);
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 70px;
+    height: 30px;
+    border: 1px lightslategrey;
+    transition-duration: 0.3s;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15vh;
+}
+
+.pagButton:hover {
+    background-color: rgba(135, 206, 235, 0.3);
+    box-shadow: 0 0 5px rgba(135, 206, 235, 1);
+}
+
+.home {
+    margin-bottom: 1vh;
+}
+.home a {
+    text-decoration: none;
+    text-shadow: 0 0 5px rgba(100, 115, 180, 1);
+    color: rgba(255, 255, 255, 1);
+    font-weight: bold;
+    font-size: xx-large;
+    transition-duration: 0.3s;
+}
+
+.home a:hover {
+    color: rgba(115, 150, 235, 1);
+    text-shadow: 0 0 5px rgba(115, 150, 235, 1);
+}
+
