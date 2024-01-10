@@ -67,7 +67,7 @@ If you encounter any issues, double-check each step and the output for any error
 - Додайте можливість сортувати та шукати по будь-якому полю без перезавантаження сторінки, наприклад, використовуючи ajax.
   ![Screen Recording 2024-01-10 at 10 44 45 PM](https://github.com/2tieatie/anc-test-task/assets/103947853/24a3f2ce-72ac-42b6-b755-ad174c456b8e)
 
-
+Made with 🐍❤️.
 
 
 
