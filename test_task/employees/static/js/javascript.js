@@ -136,7 +136,7 @@ function loadEmployeesByPosition(event, value, page) {
 
 function showEmployee(employee) {
     currentPage = 0;
-    document.getElementById('searchInput').value = '';
+    // document.getElementById('searchInput').value = '';
     var contentDiv = document.getElementById('mainTable');
     while (contentDiv.firstChild) {
         contentDiv.removeChild(contentDiv.firstChild);
@@ -146,68 +146,16 @@ function showEmployee(employee) {
         contentDiv.removeChild(contentDiv.firstChild);
     }
     var resultInfo = document.getElementById('resultsInfo');
-    resultInfo.innerHTML = `
-   <div style="
-        margin-bottom: 7%;
-        color: rgba(30, 50, 120, 1);
-        font-weight: bold;
-        white-space: nowrap;
-        ">
-
-        <div class="fieldInfo" style="width: 30%; text-align: left;">
-            <div style="margin-top: 10px;">
-                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Name:</span>
-                <span style="font-size: large; margin-left: 10px;">${employee.full_name}</span>
-            </div>
-            <div style="">
-                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Position:</span>
-                <span id= "position" 
-                style="
-                    font-size: large;
-                    margin-left: 10px;
-                    cursor: pointer;
-                    transition-duration: 0.3s;" 
-                    onmouseover="this.style.color='rgba(255, 255, 255, 1)';
-                    this.style.textShadow='0 0 5px rgba(115, 150, 235, 1)';" 
-                    onmouseout="this.style.color=''; this.style.textShadow=''; this.style.transitionDuration='0.3s';">
-                    ${employee.position}
-                    </span>
-            </div>
-            <div style="">
-                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Email:</span>
-                <span style="font-size: large; margin-left: 10px;">${employee.email}</span>
-            </div>
-            <div style="">
-                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Hire Date:</span>
-                <span style="font-size: large; margin-left: 10px;">${employee.hire_date}</span>
-            </div>
-            <div style="">
-                <span style="color: rgba(79, 150, 250, 0.5); font-size: large;">Head:</span>
-                <span id="head" style="
-                    font-size: large;
-                    margin-left: 10px;
-                    cursor: pointer;
-                    transition-duration: 0.3s;" 
-                    onmouseover="this.style.color='rgba(255, 255, 255, 1)';
-                    this.style.textShadow='0 0 5px rgba(115, 150, 235, 1)';" 
-                    onmouseout="this.style.color=''; this.style.textShadow=''; this.style.transitionDuration='0.3s';">
-                    ${employee.head_name}
-                </span>
-            </div>
-        </div>
-    </div>
-    `;
+    resultInfo.innerHTML = createEmployeeInfo(employee);
     document.getElementById("head").addEventListener('click', function() {
         fetch(`/api/employee_info/${employee.uuid}/0/`).then(
             response => response.json()
         ).then(data => {
-            console.log(data.employee_info[0].head, data.employee_info[0].uuid)
             let head_uuid = data.employee_info[0].head
             fetch(`/api/employee_info/${head_uuid}/1/`).then(
                 response => response.json()
             ).then(data => {
                 let employee = data.employee_info[0];
-                console.log(employee);
                 showEmployee(employee);
             })
         })
@@ -216,6 +164,9 @@ function showEmployee(employee) {
         fetch(`/api/employee_info/${employee.uuid}/0/`).then(
             response => response.json()
         ).then(data => {
+                document.getElementById('searchInput').value = employee.position;
+                var contentDiv = document.getElementById('pagination');
+                contentDiv.appendChild(createPagination(employee.position, true));
                 loadEmployeesByPosition(null, employee.position, 0);
         })
     });
@@ -266,4 +217,57 @@ function showEmployee(employee) {
                 }
             })
             .catch(error => console.error('Error:', error));
+}
+
+function createEmployeeInfo(employee) {
+    return `
+   <div style="
+        margin-bottom: 7%;
+        color: rgba(30, 50, 120, 1);
+        font-weight: bold;
+        white-space: nowrap;
+        ">
+        <div class="fieldInfo" style="width: 30%; text-align: left;">
+            <div style="margin-top: 10px;">
+                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Name:</span>
+                <span style="font-size: large; margin-left: 10px;">${employee.full_name}</span>
+            </div>
+            <div style="">
+                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Position:</span>
+                <span id= "position" 
+                style="
+                    font-size: large;
+                    margin-left: 10px;
+                    cursor: pointer;
+                    transition-duration: 0.3s;" 
+                    onmouseover="this.style.color='rgba(255, 255, 255, 1)';
+                    this.style.textShadow='0 0 5px rgba(115, 150, 235, 1)';" 
+                    onmouseout="this.style.color=''; this.style.textShadow=''; this.style.transitionDuration='0.3s';">
+                    ${employee.position}
+                    </span>
+            </div>
+            <div style="">
+                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Email:</span>
+                <span style="font-size: large; margin-left: 10px;">${employee.email}</span>
+            </div>
+            <div style="">
+                <span style="font-size: large; color: rgba(79, 150, 250, 0.5);">Hire Date:</span>
+                <span style="font-size: large; margin-left: 10px;">${employee.hire_date}</span>
+            </div>
+            <div style="">
+                <span style="color: rgba(79, 150, 250, 0.5); font-size: large;">Head:</span>
+                <span id="head" style="
+                    font-size: large;
+                    margin-left: 10px;
+                    cursor: pointer;
+                    transition-duration: 0.3s;" 
+                    onmouseover="this.style.color='rgba(255, 255, 255, 1)';
+                    this.style.textShadow='0 0 5px rgba(115, 150, 235, 1)';" 
+                    onmouseout="this.style.color=''; this.style.textShadow=''; this.style.transitionDuration='0.3s';">
+                    ${employee.head_name}
+                </span>
+            </div>
+        </div>
+    </div>
+    `;
 }

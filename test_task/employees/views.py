@@ -6,7 +6,7 @@ from employees.utils.requst_hendlers import get_employees_by_position, get_subor
 
 def base_page(request):
     employees_data = get_employees_by_position()
-    return render(request, 'employee_list.html', context={'employees_data': employees_data})
+    return render(request, 'base.html', context={'employees_data': employees_data})
 
 
 def employee_list(request, position: str = '', page: int = 0, sort: str = '', increase: int = 1):
